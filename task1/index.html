@@ -1,0 +1,296 @@
+Here's the full code for the login form (login-form.html):
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1b1f1c;
+    --card: #f3efe6;
+    --accent: #4f6b52;
+    --accent-dark: #3a4f3d;
+    --ink: #20241f;
+    --muted: #6b6657;
+    --border: #d8d2c4;
+    --error: #b5443d;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    min-height: 100vh;
+  }
+
+  body {
+    background: var(--bg);
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(79,107,82,0.18), transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(79,107,82,0.12), transparent 45%);
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .card {
+    background: var(--card);
+    width: 100%;
+    max-width: 400px;
+    border-radius: 4px;
+    padding: 48px 40px 40px;
+    position: relative;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.5);
+  }
+
+  .card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 40px;
+    width: 28px;
+    height: 5px;
+    background: var(--accent);
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin: 0 0 10px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 30px;
+    color: var(--ink);
+    margin: 0 0 8px;
+    line-height: 1.15;
+  }
+
+  .sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0 0 32px;
+  }
+
+  form { display: flex; flex-direction: column; gap: 20px; }
+
+  .field { display: flex; flex-direction: column; gap: 6px; }
+
+  label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  input {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    padding: 12px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 3px;
+    background: #fffdfa;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  input::placeholder { color: #b0a99a; }
+
+  input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(79,107,82,0.15);
+  }
+
+  input.invalid {
+    border-color: var(--error);
+  }
+
+  .error-msg {
+    font-size: 12.5px;
+    color: var(--error);
+    min-height: 16px;
+    margin: 0;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: -6px;
+  }
+
+  .row label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: none;
+    letter-spacing: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .row a {
+    color: var(--accent-dark);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .row a:hover { text-decoration: underline; }
+
+  button {
+    margin-top: 12px;
+    background: var(--accent-dark);
+    color: #f3efe6;
+    border: none;
+    border-radius: 3px;
+    padding: 13px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.05s ease;
+  }
+
+  button:hover { background: var(--accent); }
+  button:active { transform: scale(0.99); }
+
+  button:focus-visible,
+  input:focus-visible,
+  a:focus-visible {
+    outline: 2px solid var(--accent-dark);
+    outline-offset: 2px;
+  }
+
+  .foot {
+    margin-top: 28px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .foot a {
+    color: var(--accent-dark);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .foot a:hover { text-decoration: underline; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <p class="eyebrow">Welcome back</p>
+  <h1>Sign in to your<br>account</h1>
+  <p class="sub">Enter your details below to continue.</p>
+
+  <form id="loginForm" novalidate>
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="text" id="email" name="email" placeholder="you@example.com" autocomplete="email">
+      <p class="error-msg" id="emailError"></p>
+    </div>
+
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Enter your password" autocomplete="current-password">
+      <p class="error-msg" id="passwordError"></p>
+    </div>
+
+    <div class="row">
+      <label><input type="checkbox" id="remember" style="width:auto; padding:0;"> Remember me</label>
+      <a href="#" onclick="alert('Password reset is not implemented in this demo.'); return false;">Forgot password?</a>
+    </div>
+
+    <button type="submit">Sign in</button>
+  </form>
+
+  <p class="foot">Don't have an account? <a href="#" onclick="alert('Sign-up is not implemented in this demo.'); return false;">Create one</a></p>
+</div>
+
+<script>
+  const form = document.getElementById('loginForm');
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+  const emailError = document.getElementById('emailError');
+  const passwordError = document.getElementById('passwordError');
+
+  function isValidEmail(value) {
+    // Standard, reasonably strict email pattern
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(value.trim());
+  }
+
+  function clearFieldError(input, errorEl) {
+    input.classList.remove('invalid');
+    errorEl.textContent = '';
+  }
+
+  function setFieldError(input, errorEl, message) {
+    input.classList.add('invalid');
+    errorEl.textContent = message;
+  }
+
+  // Clear individual field errors as the user types
+  emailInput.addEventListener('input', () => clearFieldError(emailInput, emailError));
+  passwordInput.addEventListener('input', () => clearFieldError(passwordInput, passwordError));
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const emailVal = emailInput.value.trim();
+    const passwordVal = passwordInput.value;
+    const problems = [];
+
+    clearFieldError(emailInput, emailError);
+    clearFieldError(passwordInput, passwordError);
+
+    if (emailVal === '') {
+      setFieldError(emailInput, emailError, 'Email is required.');
+      problems.push('Email is required.');
+    } else if (!isValidEmail(emailVal)) {
+      setFieldError(emailInput, emailError, 'Enter a valid email address.');
+      problems.push('Enter a valid email address.');
+    }
+
+    if (passwordVal === '') {
+      setFieldError(passwordInput, passwordError, 'Password is required.');
+      problems.push('Password is required.');
+    } else if (passwordVal.length < 8) {
+      setFieldError(passwordInput, passwordError, 'Password must be at least 8 characters.');
+      problems.push('Password must be at least 8 characters.');
+    }
+
+    if (problems.length > 0) {
+      alert('Please fix the following:\n\n- ' + problems.join('\n- '));
+      return;
+    }
+
+    alert('Signed in successfully!\n\nEmail: ' + emailVal);
+    form.reset();
+  });
+</script>
+
+</body>
+</html>
+```
